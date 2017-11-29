@@ -1,0 +1,69 @@
+<form class="form-horizontal" style="margin-top: 150px;">
+
+  <div class="form-group" [ngClass]="{'has-error':!editProfileForm.controls['firstname'].valid && editProfileForm.controls['firstname'].touched}">
+    <label for="firstname" class="col-sm-2 col-sm-offset-2 control-label">First name</label>
+    <div class="col-sm-4">
+      <input type="text" class="form-control" id="firstname" value="{{ data?.firstname }}" name="firstname" [formControl]="editProfileForm.controls['firstname']" #firstname>
+
+      <div *ngIf="editProfileForm.controls['firstname'].hasError('required') && editProfileForm.controls['firstname'].touched" class="alert alert-danger" style="margin-top: 10px;">
+        You must enter a first name.
+      </div>
+
+      <div *ngIf="editProfileForm.controls['firstname'].hasError('minlength') && editProfileForm.controls['firstname'].touched" class="alert alert-danger" style="margin-top: 10px;">
+        Your first name must be at least 3 characters long.
+      </div>
+
+      <div *ngIf="editProfileForm.controls['firstname'].hasError('maxlength') && editProfileForm.controls['firstname'].touched" class="alert alert-danger" style="margin-top: 10px;">
+        Your first name cannot exceed 15 characters.
+      </div>
+
+    </div>
+  </div>
+
+  <div class="form-group" [ngClass]="{'has-error':!editProfileForm.controls['lastname'].valid && editProfileForm.controls['lastname'].touched}">
+    <label for="lastname" class="col-sm-2 col-sm-offset-2 control-label">Last name</label>
+    <div class="col-sm-4">
+      <input type="text" class="form-control" id="lastname" value="{{ data?.lastname }}" name="lastname" [formControl]="editProfileForm.controls['lastname']" #lastname>
+
+      <div *ngIf="editProfileForm.controls['lastname'].hasError('required') && editProfileForm.controls['lastname'].touched" class="alert alert-danger" style="margin-top: 10px;">
+        You must enter a last name.
+      </div>
+
+      <div *ngIf="editProfileForm.controls['lastname'].hasError('minlength') && editProfileForm.controls['lastname'].touched" class="alert alert-danger" style="margin-top: 10px;">
+        Your last name must be at least 5 characters long.
+      </div>
+
+      <div *ngIf="editProfileForm.controls['lastname'].hasError('maxlength') && editProfileForm.controls['lastname'].touched" class="alert alert-danger" style="margin-top: 10px;">
+        Your last name cannot exceed 15 characters.
+      </div>
+
+    </div>
+  </div>
+
+  <div class="form-group" [ngClass]="{'has-error':!editProfileForm.controls['email'].valid && editProfileForm.controls['email'].touched}">
+    <label for="email" class="col-sm-2 col-sm-offset-2 control-label">Email</label>
+    <div class="col-sm-4">
+      <input type="email" class="form-control" id="email" value="{{ data?.email }}" name="email" [formControl]="editProfileForm.controls['email']" #email>
+
+      <div *ngIf="editProfileForm.controls['email'].hasError('required') && editProfileForm.controls['email'].touched" class="alert alert-danger" style="margin-top: 10px;">
+        You must enter an email.
+      </div>
+
+      <div *ngIf="editProfileForm.controls['email'].hasError('pattern') && editProfileForm.controls['email'].touched" class="alert alert-danger" style="margin-top: 10px;">
+        Your email must enter a valid email, example: test@gmail.com.
+      </div>
+
+    </div>
+  </div>
+
+  <input type="hidden" class="form-control" id="rights" value="{{ data?.rights }}" #rights>
+
+  <div class="form-group">
+    <div class="col-sm-offset-4 col-sm-8">
+      <button type="submit" class="btn btn-success" (click)="editProfile(firstname, lastname, email, rights)">
+        <i class="fa fa-check" aria-hidden="true" style="margin-right: 7px;"></i>Save
+      </button>
+    </div>
+  </div>
+
+</form>

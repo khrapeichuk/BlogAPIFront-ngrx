@@ -1,0 +1,29 @@
+<div class="row">
+  <div class="col-sm-offset-2 col-sm-8">
+
+    <div class="media" style="margin-top: 50px;">
+      <div class="media-left">
+        <img class="media-object" src="default-profile.png">
+      </div>
+
+      <div class="media-body">
+        <h4 class="media-heading">{{ data?.firstname + " " + data?.lastname }}</h4>
+        <div style="display: inline-block">
+          <h5>email: {{ data?.email }}</h5>
+        </div>
+
+        <div style="display: inline-block; margin-left: 100px;">rights:</div>
+        <div style="display: inline-block;" *ngFor="let right of data?.rights">
+          {{ right + "; " }}
+        </div>
+
+        <button class="btn btn-info pull-right" [routerLink]="['/edit-profile']" routerLinkActive="active">
+          <i class="fa fa-pencil" aria-hidden="true" style="margin-right: 7px;"></i>Edit profile
+        </button>
+
+        <p>registration date: {{ data?.created_at | date:"dd-MM-yyyy" }}</p>
+      </div>
+
+    </div>
+  </div>
+</div>

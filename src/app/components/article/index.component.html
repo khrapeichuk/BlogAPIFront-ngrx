@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="col-sm-offset-1 col-sm-10">
+    <button class="btn btn-info pull-right" [routerLink]="['/create-article']" routerLinkActive="active">
+      <i class="fa fa-plus" aria-hidden="true" style="margin-right: 7px;"></i>Add article
+    </button>
+
+    <div class="media" style="margin-top: 80px; margin-bottom: 80px;" *ngFor="let article of data?.articles">
+
+      <div class="media-left" >
+        <img class="media-object" width="150" height="150" src="{{ article.image }}">
+      </div>
+
+      <div class="media-body">
+        <div style="display: inline-block;" *ngIf="isAuthorized()">
+          <a [routerLink]="['/articles', article._id]"><h4 class="media-heading">{{ article.title }}</h4></a>
+        </div>
+        <div style="display: inline-block;" *ngIf="!isAuthorized()">
+          <h4 class="media-heading">{{ article.title }}</h4>
+        </div>
+
+        <p style="display: inline-block; margin-right: 50px;" class="pull-right">
+          <i>{{ article.created_at }}</i>
+        </p>
+
+        <p style="margin-top: 12px;">{{ article.body | slice: 0: 990 }} {{ "..." }}</p>
+      </div>
+
+      <div class="pull-right" *ngIf="isArticleAuthor(article.author._id)">
+        <button class="btn btn-danger pull-right" style="margin-left: 15px;" (click)="deleteArticle(article._id)">
+          <i class="fa fa-trash-o" aria-hidden="true" style="margin-right: 7px;"></i>Delete article
+        </button>
+
+        <button class="btn btn-warning pull-right" [routerLink]="['/edit-article', article._id]" routerLinkActive="active">
+          <i class="fa fa-pencil" aria-hidden="true" style="margin-right: 7px;"></i>Edit article
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>

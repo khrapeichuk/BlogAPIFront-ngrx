@@ -1,0 +1,81 @@
+<form class="form-horizontal" style="margin-top: 100px;">
+
+  <div class="form-group" [ngClass]="{'has-error':!registrationForm.controls['firstname'].valid && registrationForm.controls['firstname'].touched}">
+    <label for="firstname" class="col-sm-2 col-sm-offset-2 control-label">First name</label>
+    <div class="col-sm-4">
+      <input type="text" class="form-control" id="firstname" placeholder="First name" name="firstname" [formControl]="registrationForm.controls['firstname']" #firstname>
+
+      <div *ngIf="registrationForm.controls['firstname'].hasError('required') && registrationForm.controls['firstname'].touched" class="alert alert-danger" style="margin-top: 10px;">
+        You must enter a first name.
+      </div>
+      <div *ngIf="registrationForm.controls['firstname'].hasError('minlength') && registrationForm.controls['firstname'].touched" class="alert alert-danger" style="margin-top: 10px;">
+        Your first name must be at least 3 characters long.
+      </div>
+
+      <div *ngIf="registrationForm.controls['firstname'].hasError('maxlength') && registrationForm.controls['firstname'].touched" class="alert alert-danger" style="margin-top: 10px;">
+        Your first name cannot exceed 15 characters.
+      </div>
+
+    </div>
+  </div>
+
+  <div class="form-group" [ngClass]="{'has-error':!registrationForm.controls['lastname'].valid && registrationForm.controls['lastname'].touched}">
+    <label for="lastname" class="col-sm-2 col-sm-offset-2 control-label">Last name</label>
+    <div class="col-sm-4">
+      <input type="text" class="form-control" id="lastname" placeholder="Last name" name="lastname" [formControl]="registrationForm.controls['lastname']" #lastname>
+
+      <div *ngIf="registrationForm.controls['lastname'].hasError('required') && registrationForm.controls['lastname'].touched" class="alert alert-danger" style="margin-top: 10px;">
+        You must enter a last name.
+      </div>
+      <div *ngIf="registrationForm.controls['lastname'].hasError('minlength') && registrationForm.controls['lastname'].touched" class="alert alert-danger" style="margin-top: 10px;">
+        Your last name must be at least 5 characters long.
+      </div>
+      <div *ngIf="registrationForm.controls['lastname'].hasError('maxlength') && registrationForm.controls['lastname'].touched" class="alert alert-danger" style="margin-top: 10px;">
+        Your last name cannot exceed 15 characters.
+      </div>
+
+    </div>
+  </div>
+
+  <div class="form-group" [ngClass]="{'has-error':!registrationForm.controls['email'].valid && registrationForm.controls['email'].touched}">
+    <label for="email" class="col-sm-2 col-sm-offset-2 control-label">Email</label>
+    <div class="col-sm-4">
+      <input type="email" class="form-control" id="email" placeholder="Email" name="email" [formControl]="registrationForm.controls['email']" #email>
+
+      <div *ngIf="registrationForm.controls['email'].hasError('required') && registrationForm.controls['email'].touched" class="alert alert-danger" style="margin-top: 10px;">
+        You must enter an email.
+      </div>
+      <div *ngIf="registrationForm.controls['email'].hasError('pattern') && registrationForm.controls['email'].touched" class="alert alert-danger" style="margin-top: 10px;">
+        Your email must enter a valid email, example: test@gmail.com.
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group" [ngClass]="{'has-error':!registrationForm.controls['password'].valid && registrationForm.controls['password'].touched}">
+    <label for="password" class="col-sm-2 col-sm-offset-2 control-label">Password</label>
+    <div class="col-sm-4">
+      <input type="password" class="form-control" id="password" placeholder="Password" name="password" [formControl]="registrationForm.controls['password']" #password>
+
+      <div *ngIf="registrationForm.controls['password'].hasError('required') && registrationForm.controls['password'].touched" class="alert alert-danger" style="margin-top: 10px;">
+        You must enter a password.
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf= "error">
+    <div class="form-group">
+      <div class="col-sm-offset-4 col-sm-4">
+        <div class="alert alert-danger" role="alert">{{error}}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-4 col-sm-8">
+      <button type="submit" class="btn btn-success" [disabled]="!registrationForm.valid" (click)="registration(firstname, lastname, email, password)">
+        <i class="fa fa fa-user-plus" aria-hidden="true" style="margin-right: 7px;"></i>Registration
+      </button>
+    </div>
+  </div>
+
+</form>
