@@ -29,13 +29,10 @@ export class CreateArticleComponent {
   }
 
   /**
-   * @param {HTMLInputElement} title
-   * @param {HTMLInputElement} body
-   * @param {HTMLInputElement} category
-   * @param {HTMLInputElement} image
+   * @param article
    */
-  createArticle(title: HTMLInputElement, body: HTMLInputElement, category: HTMLInputElement, image: HTMLInputElement) {
-    this.articleService.createArticle(title, body, category, image)
+  createArticle(article) {
+    this.articleService.createArticle(article)
       .subscribe((responseBody: object) => {
           this.data = responseBody;
 

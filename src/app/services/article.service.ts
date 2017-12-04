@@ -4,6 +4,7 @@ import 'rxjs/add/operator/toPromise';
 
 import { APIService } from './api.service';
 import { LocalStorageService } from './local-storage.service';
+import {longStackSupport} from "q";
 
 @Injectable()
 export class ArticleService {
@@ -33,20 +34,17 @@ export class ArticleService {
   }
 
   /**
-   * @param title
-   * @param body
-   * @param category
-   * @param image
+   * @param article
    * @returns {Observable<any>}
    */
-  createArticle(title, body, category, image) {
+  createArticle(article) {
     return this.APIService.post(
       this.articleUrl + '?token=' + this.localStorageService.getParameter('token'),
       {
-        title: title.value,
-        body: body.value,
-        category: category.value.split(','),
-        image: image.value
+        title: article.value.title,
+        body: article.value.body,
+        category: article.value.category.split(','),
+        image: article.value.image
       }
     );
   }
@@ -79,22 +77,6 @@ export class ArticleService {
     return this.APIService.delete(
       this.articleUrl + id)
       .toPromise()
-      .then(() => null)
-      .catch(() => null);
-  }
-
-  /**
-   * @param articleId
-   * @param message
-   * @returns {Promise<never | any>}
-   */
-  addComment(articleId, message) {
-    return this.APIService.post(
-      this.articleUrl + articleId + '/comments?token=' + this.localStorageService.getParameter('token'),
-      {
-        message: message.value,
-      }
-    ).toPromise()
       .then(() => null)
       .catch(() => null);
   }
