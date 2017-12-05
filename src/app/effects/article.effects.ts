@@ -16,7 +16,31 @@ export class ArticleEffects {
     .ofType(ArticleActions.GET_ARTICLE)
     .map((action: ArticleActions.GetArticle) => JSON.stringify(action.payload))
     .switchMap(id => this.articleService.getArticleById(id)
-        .map(article => new ArticleActions.GetArticleSuccess(article))
-        .catch(error => of(new ArticleActions.GetArticleFail(error)))
+      .map(article => new ArticleActions.GetArticleSuccess(article))
+      .catch(error => of(new ArticleActions.GetArticleFail(error)))
+    );
+
+  @Effect() createArticle$ = this.actions$
+    .ofType(ArticleActions.CREATE_ARTICLE)
+    .map((action: ArticleActions.CreateArticle) => JSON.stringify(action.payload))
+    .switchMap(article => this.articleService.createArticle(article)
+      .map(article => new ArticleActions.CreateArticleSuccess(article))
+      .catch(error => of(new ArticleActions.CreateArticleFail(error)))
+    );
+
+  @Effect() updateArticle$ = this.actions$
+    .ofType(ArticleActions.UPDATE_ARTICLE)
+    .map((action: ArticleActions.UpdateArticle) => JSON.stringify(action.payload))
+    .switchMap(article => this.articleService.editArticle(article)
+      .map(article => new ArticleActions.UpdateArticleSuccess(article))
+      .catch(error => of(new ArticleActions.UpdateArticleFail(error)))
+    );
+
+  @Effect() deleteArticle$ = this.actions$
+    .ofType(ArticleActions.DELETE_ARTICLE)
+    .map((action: ArticleActions.DeleteArticle) => JSON.stringify(action.payload))
+    .switchMap(id => this.articleService.deleteArticle(id)
+      .map(id => new ArticleActions.DeleteArticleSuccess(id))
+      .catch(error => of(new ArticleActions.UpdateArticleFail(error)))
     );
 }

@@ -1,5 +1,7 @@
 import { Action } from '@ngrx/store';
 
+import { Article } from '../models/article.model';
+
 export const GET_ARTICLE = 'Get Article';
 export const GET_ARTICLE_SUCCESS = 'Get Article Success';
 export const GET_ARTICLE_FAIL = 'Get Article Fail';
@@ -22,13 +24,13 @@ export const DELETE_ARTICLES_FAIL = 'Delete Articles Fail';
 export class GetArticle implements Action {
   readonly type = GET_ARTICLE;
 
-  constructor(public payload: object) {}
+  constructor(public payload: Article) {}
 }
 
 export class GetArticleSuccess implements Action {
   readonly type = GET_ARTICLE_SUCCESS;
 
-  constructor(public payload: object) {}
+  constructor(public payload: Article) {}
 }
 
 export class GetArticleFail implements Action {
@@ -58,13 +60,13 @@ export class GetArticlesFail implements Action {
 export class CreateArticle implements Action {
   readonly type = CREATE_ARTICLE;
 
-  constructor(public payload: object) {}
+  constructor(public payload: Article) {}
 }
 
 export class CreateArticleSuccess implements Action {
   readonly type = CREATE_ARTICLES_SUCCESS;
 
-  constructor(public payload: object) {}
+  constructor(public payload: Article) {}
 }
 
 export class CreateArticleFail implements Action {
@@ -79,13 +81,13 @@ export class CreateArticleFail implements Action {
 export class UpdateArticle implements Action {
   readonly type = UPDATE_ARTICLE;
 
-  constructor(public payload: object) {}
+  constructor(public payload: Article) {}
 }
 
 export class UpdateArticleSuccess implements Action {
   readonly type = UPDATE_ARTICLES_SUCCESS;
 
-  constructor(public payload: object) {}
+  constructor(public payload: Article) {}
 }
 
 export class UpdateArticleFail implements Action {
@@ -106,7 +108,7 @@ export class DeleteArticle implements Action {
 export class DeleteArticleSuccess implements Action {
   readonly type = DELETE_ARTICLES_SUCCESS;
 
-  constructor(public payload: object) {}
+  constructor(public payload: string) {}
 }
 
 export class DeleteArticleFail implements Action {
