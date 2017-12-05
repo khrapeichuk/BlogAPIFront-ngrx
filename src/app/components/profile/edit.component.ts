@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import { User } from '../../models/user.model';
+
 import { UserService } from '../../services/user.service';
 import { LocalStorageService } from '../../services/local-storage.service';
 
@@ -13,6 +15,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 
 export class EditProfileComponent implements OnInit {
   data: Object;
+  user: User;
   error: null;
   editProfileForm: FormGroup;
 
@@ -57,9 +60,21 @@ export class EditProfileComponent implements OnInit {
    * @param {HTMLInputElement} rights
    */
   editProfile(firstname: HTMLInputElement, lastname: HTMLInputElement, email: HTMLInputElement, rights: HTMLInputElement) {
+    this.user = new User(this.localStorageService.getParameter('id'),
+      firstname.value,
+      lastname.value,
+      email.value,
+      '',
+      '',
+      '',
+      '',
+      null,
+      ''
+    );
+
     this.error = null;
 
-    this.userService.editProfile(this.localStorageService.getParameter('id'), firstname, lastname, email, rights.value)
+    this.userService.editProfile(this.user)
       .subscribe((responseBody: object) => {
           this.data = responseBody;
 

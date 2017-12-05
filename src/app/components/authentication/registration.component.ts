@@ -17,6 +17,7 @@ export class RegistrationComponent {
   data: Object;
   currentUser: User;
   user: User;
+  registeredUser: User;
   error: string;
   registrationForm: FormGroup;
 
@@ -28,7 +29,12 @@ export class RegistrationComponent {
    * @param {LocalStorageService} localStorageService
    * @param {Router} router
    */
-  constructor(formBuilder: FormBuilder, private userService: UserService, private localStorageService: LocalStorageService, private router: Router) {
+  constructor(
+    formBuilder: FormBuilder,
+    private userService: UserService,
+    private localStorageService: LocalStorageService,
+    private router: Router
+  ) {
     const emailRegex = '^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$';
 
     this.registrationForm = formBuilder.group({
@@ -46,8 +52,20 @@ export class RegistrationComponent {
    * @param {HTMLInputElement} password
    */
   registration(firstname: HTMLInputElement, lastname: HTMLInputElement, email: HTMLInputElement, password: HTMLInputElement) {
+    this.registeredUser = new User('',
+      firstname.value,
+      lastname.value,
+      email.value,
+      password.value,
+      '',
+      '',
+      '',
+      null,
+      ''
+    );
+
     this.error = null;
-    this.userService.registration(firstname, lastname, email, password)
+    this.userService.registration(this.registeredUser)
       .subscribe(
         (responseBody) => {
           this.data = responseBody;

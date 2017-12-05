@@ -33,52 +33,47 @@ export class UserService {
   }
 
   /**
-   * @param email
-   * @param password
+   * @param user
+   *
    * @returns {Observable<any>}
    */
-  login(email, password) {
+  login(user) {
     return this.APIService.post(this.userUrl + 'login',
       {
-        email: email.value,
-        password: password.value
+        email: user.email,
+        password: user.password
       }
     );
   }
 
   /**
-   * @param firstname
-   * @param lastname
-   * @param email
-   * @param password
+   * @param user
+   *
    * @returns {Observable<any>}
    */
-  registration(firstname, lastname, email, password) {
+  registration(user) {
     return this.APIService.post(this.userUrl,
       {
-        firstname: firstname.value,
-        lastname: lastname.value,
-        email: email.value,
-        password: password.value
+        firstname: user.firstname,
+        lastname: user.lastname,
+        email: user.email,
+        password: user.password
       }
     );
   }
 
   /**
-   * @param id
-   * @param firstname
-   * @param lastname
-   * @param email
-   * @param rights
+   * @param user
+   *
    * @returns {Observable<any>}
    */
-  editProfile(id, firstname, lastname, email, rights) {
-    return this.APIService.put(this.userUrl + id,
+  editProfile(user) {
+    return this.APIService.put(this.userUrl + user._id,
       {
-        firstname: firstname.value,
-        lastname: lastname.value,
-        email: email.value,
-        rights: rights.split(',')
+        firstname: user.firstname,
+        lastname: user.lastname,
+        email: user.email,
+        rights: user.rights
       }
     );
   }

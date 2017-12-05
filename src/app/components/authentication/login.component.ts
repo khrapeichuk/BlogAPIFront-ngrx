@@ -18,6 +18,7 @@ export class LoginComponent {
   data: Object;
   currentUser: User;
   user: User;
+  authenticatedUser: User;
   error: null;
   loginForm: FormGroup;
 
@@ -29,7 +30,12 @@ export class LoginComponent {
    * @param {LocalStorageService} localStorageService
    * @param {Router} router
    */
-  constructor(formBuilder: FormBuilder, private userService: UserService, private localStorageService: LocalStorageService, private router: Router) {
+  constructor(
+    formBuilder: FormBuilder,
+    private userService: UserService,
+    private localStorageService: LocalStorageService,
+    private router: Router
+  ) {
     const emailRegex = '^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$';
 
     this.loginForm = formBuilder.group({
@@ -43,8 +49,19 @@ export class LoginComponent {
    * @param {HTMLInputElement} password
    */
   login(email: HTMLInputElement, password: HTMLInputElement) {
+    this.authenticatedUser = new User('',
+      '',
+      '',
+      email.value,
+      password.value,
+      '',
+      '',
+      '',
+      null,
+      ''
+    );
     this.error = null;
-    this.userService.login(email, password)
+    this.userService.login(this.authenticatedUser)
       .subscribe(
         (responseBody) => {
           this.data = responseBody;
