@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { NgModule } from '@angular/core';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -21,6 +23,9 @@ import { APIService } from './services/api.service';
 import { ArticleService } from './services/article.service';
 import { LocalStorageService } from './services/local-storage.service';
 import { UserService } from './services/user.service';
+import { reducers } from './app.reducers';
+
+import { ArticleEffects } from './effects/article.effects';
 
 @NgModule({
   declarations: [
@@ -41,7 +46,9 @@ import { UserService } from './services/user.service';
     BrowserModule,
     FormsModule,
     HttpModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    StoreModule.forRoot(reducers),
+    EffectsModule.forRoot([ArticleEffects]),
   ],
   providers: [
     APIService,
