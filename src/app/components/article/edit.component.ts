@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { ArticleService } from '../../services/article.service';
+import { Article } from '../../models/article.model';
 
 @Component({
   selector: 'app-edit-article',
@@ -11,6 +12,7 @@ import { ArticleService } from '../../services/article.service';
 })
 
 export class EditArticleComponent implements OnInit {
+  article: Article;
   data: Object;
   error: null;
   editArticleForm: FormGroup;
@@ -59,8 +61,21 @@ export class EditArticleComponent implements OnInit {
    * @param {HTMLInputElement} image
    */
   editArticle(articleId, title: HTMLInputElement, body: HTMLInputElement, category: HTMLInputElement, image: HTMLInputElement) {
+    this.article = new Article(
+      articleId,
+      title.value,
+      [],
+      '',
+      image.value,
+      body.value,
+      [],
+      '',
+      '',
+      []
+    );
+
     this.error = null;
-    this.articleService.editArticle(articleId, title, body, category, image)
+    this.articleService.editArticle(this.article)
       .subscribe((responseBody: object) => {
           this.data = responseBody;
 

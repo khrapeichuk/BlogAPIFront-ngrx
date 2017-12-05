@@ -4,7 +4,6 @@ import 'rxjs/add/operator/toPromise';
 
 import { APIService } from './api.service';
 import { LocalStorageService } from './local-storage.service';
-import {longStackSupport} from "q";
 
 @Injectable()
 export class ArticleService {
@@ -50,21 +49,18 @@ export class ArticleService {
   }
 
   /**
-   * @param id
-   * @param title
-   * @param body
-   * @param category
-   * @param image
+   * @param article
    * @returns {Observable<any>}
    */
-  editArticle(id, title, body, category, image) {
+  editArticle(article) {
+    console.log(article._id, article.title, article.body, article.image);
     return this.APIService.put(
-      this.articleUrl + id,
+      this.articleUrl + article._id,
       {
-        title: title.value,
-        body: body.value,
-        category: category.value.split(','),
-        image: image.value
+        title: article.title,
+        body: article.body,
+        category: article.category,
+        image: article.image
       }
     );
   }
