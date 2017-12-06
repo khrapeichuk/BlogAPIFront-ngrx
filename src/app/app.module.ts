@@ -27,6 +27,8 @@ import { reducers } from './app.reducers';
 
 import { ArticleEffects } from './effects/article.effects';
 
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,6 +51,9 @@ import { ArticleEffects } from './effects/article.effects';
     ReactiveFormsModule,
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([ArticleEffects]),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25
+    }),
   ],
   providers: [
     APIService,
