@@ -16,7 +16,7 @@ export class ArticleEffects {
     .ofType(ArticleActions.GET_ARTICLE)
     .map((action: ArticleActions.GetArticle) => JSON.stringify(action.payload))
     .switchMap(id => this.articleService.getArticleById(id)
-      .map(article => new ArticleActions.GetArticleSuccess(article))
+      .map(articles => new ArticleActions.GetArticleSuccess(articles))
       .catch(error => of(new ArticleActions.GetArticleFail(error)))
     );
 
@@ -33,14 +33,6 @@ export class ArticleEffects {
     .map((action: ArticleActions.UpdateArticle) => JSON.stringify(action.payload))
     .switchMap(article => this.articleService.editArticle(article)
       .map(article => new ArticleActions.UpdateArticleSuccess(article))
-      .catch(error => of(new ArticleActions.UpdateArticleFail(error)))
-    );
-
-  @Effect() deleteArticle$ = this.actions$
-    .ofType(ArticleActions.DELETE_ARTICLE)
-    .map((action: ArticleActions.DeleteArticle) => JSON.stringify(action.payload))
-    .switchMap(id => this.articleService.deleteArticle(id)
-      .map(id => new ArticleActions.DeleteArticleSuccess(id))
       .catch(error => of(new ArticleActions.UpdateArticleFail(error)))
     );
 }

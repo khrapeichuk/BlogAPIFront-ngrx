@@ -1,13 +1,14 @@
 import * as ArticleActions from '../actions/article.actions';
+import { Article } from '../models/article.model';
 
 export interface State {
   id: string | null;
-  article: object | null;
+  articles: Article[];
 }
 
 const initialState: State = {
   id: null,
-  article: null,
+  articles: [],
 };
 
 export function articleReducer(state = initialState, action: ArticleActions.ArticleActions): State {
@@ -15,7 +16,7 @@ export function articleReducer(state = initialState, action: ArticleActions.Arti
     case ArticleActions.GET_ARTICLE: {
       return {
         ...state,
-        article: action.payload,
+        id: action.payload,
       };
     }
 
@@ -28,14 +29,14 @@ export function articleReducer(state = initialState, action: ArticleActions.Arti
     case ArticleActions.CREATE_ARTICLE: {
       return {
         ...state,
-        article: action.payload,
+        articles: [action.payload],
       };
     }
 
     case ArticleActions.UPDATE_ARTICLE: {
       return {
         ...state,
-        article: action.payload,
+        articles: [action.payload],
       };
     }
 
@@ -51,3 +52,6 @@ export function articleReducer(state = initialState, action: ArticleActions.Arti
     }
   }
 }
+
+export const getSelectedId = (state: State) => state.id;
+export const getArticles = (state: State) => state.articles;
