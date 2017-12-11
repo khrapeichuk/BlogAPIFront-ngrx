@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
+import * as articleActions from '../../actions/article.actions';
 
 import { ArticleService } from '../../services/article.service';
 import { UserService } from '../../services/user.service';
+import { Article } from '../../models/article.model';
+import * as articleReducer from '../../app.reducers';
 
 @Component({
   selector: 'app-articles',
@@ -11,6 +16,7 @@ import { UserService } from '../../services/user.service';
 
 export class ArticlesComponent implements OnInit {
   data: Object;
+  articles$: Observable<Article[]>;
 
   /**
    * ArticlesComponent constructor
@@ -18,17 +24,16 @@ export class ArticlesComponent implements OnInit {
    * @param {ArticleService} articleService
    * @param {UserService} userService
    */
-  constructor(private articleService: ArticleService, private userService: UserService) {}
-
-  ngOnInit(): void {
-    this.displayArticles();
+  constructor(
+    private articleService: ArticleService,
+    private userService: UserService,
+    private store: Store<Article>
+  ) {
+    this.store.dispatch(new articleActions.GetArticles());
   }
 
-  displayArticles() {
-    this.articleService.getArticles()
-      .subscribe((responseBody: object) => {
-        this.data = responseBody;
-    });
+  ngOnInit(): void {
+    this.articles$ = this.store.select(articleReducer.getArticles);
   }
 
   /**

@@ -4,7 +4,7 @@
       <i class="fa fa-plus" aria-hidden="true" style="margin-right: 7px;"></i>Add article
     </button>
 
-    <div class="media" style="margin-top: 80px; margin-bottom: 80px;" *ngFor="let article of data?.articles">
+    <div class="media" style="margin-top: 80px; margin-bottom: 80px;" *ngFor="let article of articles$ | async">
 
       <div class="media-left" >
         <img class="media-object" width="150" height="150" src="{{ article.image }}">

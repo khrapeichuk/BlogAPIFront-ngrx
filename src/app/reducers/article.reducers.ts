@@ -8,7 +8,7 @@ export interface State {
 
 const initialState: State = {
   id: null,
-  articles: [],
+  articles: []
 };
 
 export function articleReducer(state = initialState, action: ArticleActions.ArticleActions): State {
@@ -20,9 +20,23 @@ export function articleReducer(state = initialState, action: ArticleActions.Arti
       };
     }
 
-    case ArticleActions.GET_ARTICLES: {
+    case ArticleActions.GET_ARTICLE_SUCCESS: {
       return {
         ...state,
+        articles: [action.payload],
+      };
+    }
+
+    case ArticleActions.GET_ARTICLES: {
+      return Object.assign({}, state, {
+        id: null,
+      });
+    }
+
+    case ArticleActions.GET_ARTICLES_SUCCESS: {
+      return {
+        ...state,
+        articles: action.payload.articles,
       };
     }
 

@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { of } from 'rxjs/observable/of';
+import { Action } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
 
 import { ArticleService } from '../services/article.service';
 import * as ArticleActions from '../actions/article.actions';
+import { Article } from '../models/article.model';
 
 @Injectable()
 export class ArticleEffects {
@@ -12,7 +15,8 @@ export class ArticleEffects {
     private actions$: Actions
   ) { }
 
-  @Effect() getArticle$ = this.actions$
+  @Effect()
+  getArticle$: Observable<Action> = this.actions$
     .ofType(ArticleActions.GET_ARTICLE)
     .map((action: ArticleActions.GetArticle) => JSON.stringify(action.payload))
     .switchMap(id => this.articleService.getArticleById(id)
@@ -20,19 +24,30 @@ export class ArticleEffects {
       .catch(error => of(new ArticleActions.GetArticleFail(error)))
     );
 
-  @Effect() createArticle$ = this.actions$
+  @Effect()
+  getArticles$: Observable<Action> = this.actions$
+    .ofType(ArticleActions.GET_ARTICLES)
+    .startWith(new ArticleActions.GetArticles())
+    .switchMap(() => this.articleService.getArticles()
+        .map((articles: Article[]) => new ArticleActions.GetArticlesSuccess(articles))
+        .catch(error => of(new ArticleActions.GetArticlesFail(error)))
+    );
+
+  @Effect()
+  createArticle$: Observable<Action> = this.actions$
     .ofType(ArticleActions.CREATE_ARTICLE)
     .map((action: ArticleActions.CreateArticle) => JSON.stringify(action.payload))
     .switchMap(article => this.articleService.createArticle(article)
-      .map(article => new ArticleActions.CreateArticleSuccess(article))
+      .map(articles => new ArticleActions.CreateArticleSuccess(articles))
       .catch(error => of(new ArticleActions.CreateArticleFail(error)))
     );
 
-  @Effect() updateArticle$ = this.actions$
+  @Effect()
+  updateArticle$: Observable<Action> = this.actions$
     .ofType(ArticleActions.UPDATE_ARTICLE)
     .map((action: ArticleActions.UpdateArticle) => JSON.stringify(action.payload))
     .switchMap(article => this.articleService.editArticle(article)
-      .map(article => new ArticleActions.UpdateArticleSuccess(article))
+      .map(articles => new ArticleActions.UpdateArticleSuccess(articles))
       .catch(error => of(new ArticleActions.UpdateArticleFail(error)))
     );
 }
