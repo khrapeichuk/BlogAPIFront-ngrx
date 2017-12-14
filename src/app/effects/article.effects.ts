@@ -18,7 +18,7 @@ export class ArticleEffects {
   @Effect()
   getArticle$: Observable<Action> = this.actions$
     .ofType(ArticleActions.GET_ARTICLE)
-    .map((action: ArticleActions.GetArticle) => JSON.stringify(action.payload))
+    .map((action: ArticleActions.GetArticle) => action.payload)
     .switchMap(id => this.articleService.getArticleById(id)
       .map(articles => new ArticleActions.GetArticleSuccess(articles))
       .catch(error => of(new ArticleActions.GetArticleFail(error)))
@@ -29,14 +29,14 @@ export class ArticleEffects {
     .ofType(ArticleActions.GET_ARTICLES)
     .startWith(new ArticleActions.GetArticles())
     .switchMap(() => this.articleService.getArticles()
-        .map((articles: Article[]) => new ArticleActions.GetArticlesSuccess(articles))
-        .catch(error => of(new ArticleActions.GetArticlesFail(error)))
+      .map((articles: Article[]) => new ArticleActions.GetArticlesSuccess(articles))
+      .catch(error => of(new ArticleActions.GetArticlesFail(error)))
     );
 
   @Effect()
   createArticle$: Observable<Action> = this.actions$
     .ofType(ArticleActions.CREATE_ARTICLE)
-    .map((action: ArticleActions.CreateArticle) => JSON.stringify(action.payload))
+    .map((action: ArticleActions.CreateArticle) => action.payload)
     .switchMap(article => this.articleService.createArticle(article)
       .map(articles => new ArticleActions.CreateArticleSuccess(articles))
       .catch(error => of(new ArticleActions.CreateArticleFail(error)))
@@ -45,7 +45,7 @@ export class ArticleEffects {
   @Effect()
   updateArticle$: Observable<Action> = this.actions$
     .ofType(ArticleActions.UPDATE_ARTICLE)
-    .map((action: ArticleActions.UpdateArticle) => JSON.stringify(action.payload))
+    .map((action: ArticleActions.UpdateArticle) => action.payload)
     .switchMap(article => this.articleService.editArticle(article)
       .map(articles => new ArticleActions.UpdateArticleSuccess(articles))
       .catch(error => of(new ArticleActions.UpdateArticleFail(error)))

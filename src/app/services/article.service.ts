@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-
-import 'rxjs/add/operator/toPromise';
+import { Observable } from 'rxjs/Observable';
 
 import { APIService } from './api.service';
 import { LocalStorageService } from './local-storage.service';
+
+import { Article } from '../models/article.model';
 
 @Injectable()
 export class ArticleService {
@@ -20,8 +21,9 @@ export class ArticleService {
   /**
    * @returns {Observable<any>}
    */
-  getArticles() {
-    return this.APIService.get(this.articleUrl);
+  getArticles(): Observable<Article[]> {
+    return this.APIService.get(this.articleUrl)
+      .map((responseBody: {articles?: Article[]}) => responseBody.articles);
   }
 
   /**

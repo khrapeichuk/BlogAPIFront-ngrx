@@ -61,18 +61,10 @@ export class EditArticleComponent implements OnInit {
    * @param {HTMLInputElement} image
    */
   editArticle(articleId, title: HTMLInputElement, body: HTMLInputElement, category: HTMLInputElement, image: HTMLInputElement) {
-    this.article = new Article(
-      articleId,
-      title.value,
-      [],
-      '',
-      image.value,
-      body.value,
-      [],
-      '',
-      '',
-      []
-    );
+    this.article._id = articleId;
+    this.article.title = title.value;
+    this.article.image = image.value;
+    this.article.body = body.value;
 
     this.error = null;
     this.articleService.editArticle(this.article)

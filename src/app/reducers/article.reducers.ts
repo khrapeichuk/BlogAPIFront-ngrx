@@ -28,15 +28,16 @@ export function articleReducer(state = initialState, action: ArticleActions.Arti
     }
 
     case ArticleActions.GET_ARTICLES: {
-      return Object.assign({}, state, {
+      return {
+        ...state,
         id: null,
-      });
+      };
     }
 
     case ArticleActions.GET_ARTICLES_SUCCESS: {
       return {
         ...state,
-        articles: action.payload.articles,
+        articles: action.payload,
       };
     }
 

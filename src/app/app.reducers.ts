@@ -1,4 +1,4 @@
-import { createSelector } from '@ngrx/store';
+import { createSelector } from 'reselect';
 
 import * as articleReducer from './reducers/article.reducers';
 
@@ -14,3 +14,8 @@ export const getArticlesState = (state: AppState) => state.article;
 
 export const getArticles = createSelector(getArticlesState, articleReducer.getArticles);
 export const getSelectedId = createSelector(getArticlesState, articleReducer.getSelectedId);
+// export const getSelectedArticle = createSelector(getArticlesState, articleReducer.getSelectedArticle);
+
+export const getSelectedArticle = createSelector(getArticlesState, getSelectedId, (entities, selectedId) => {
+  return entities[selectedId];
+});
