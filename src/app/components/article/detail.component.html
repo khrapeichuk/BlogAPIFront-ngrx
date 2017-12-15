@@ -4,23 +4,23 @@
       <i class="fa fa-chevron-left" aria-hidden="true" style="margin-right: 7px;"></i>Back to articles list
     </button>
 
-    <h2 class="text-center"><i>{{ data?.title }}</i></h2>
+    <h2 class="text-center"><i>{{ (article$ | async).title }}</i></h2>
 
     <p>
       <img src="{{ data?.image }}" width="250" height="250" style="float: left; margin-right: 12px; margin-bottom: 7px;">
-      {{ data?.body }}
+      {{ (article$ | async).body }}
     </p>
 
     <div style="margin-top: 30px;">
-      <b>Author:</b><i>{{ data?.author.firstname + ' ' + data?.author.lastname }}</i>
+      <b>Author:</b><i>{{ (article$ | async).author.firstname + ' ' + (article$ | async).author.lastname }}</i>
     </div>
 
     <div>
-      <b>Creation date:</b><i>{{ data?.created_at | date }}</i>
+      <b>Creation date:</b><i>{{ (article$ | async).created_at | date }}</i>
     </div>
 
     <div>
-      <b>Categories:</b><i *ngFor="let category of data?.category">{{ category + "; " }}</i>
+      <b>Categories:</b><i *ngFor="let category of (article$ | async).category">{{ category + "; " }}</i>
     </div>
 
     <hr>
@@ -28,7 +28,7 @@
     <div class="row" style="margin-top: 70px;">
       <div class="col-sm-offset-2 col-sm-8">
 
-        <div class="media" style="margin-bottom: 30px;" *ngFor="let comment of data?.comments">
+        <div class="media" style="margin-bottom: 30px;" *ngFor="let comment of (article$ | async).comments">
 
           <div class="media-left">
             <img class="media-object" src="default-profile.png">

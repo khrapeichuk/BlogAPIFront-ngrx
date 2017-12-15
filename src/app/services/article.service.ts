@@ -55,7 +55,6 @@ export class ArticleService {
    * @returns {Observable<any>}
    */
   editArticle(article) {
-    console.log(article._id, article.title, article.body, article.image);
     return this.APIService.put(
       this.articleUrl + article._id,
       {

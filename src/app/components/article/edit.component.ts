@@ -29,8 +29,8 @@ export class EditArticleComponent implements OnInit {
     formBuilder: FormBuilder,
     private articleService: ArticleService,
     private  activatedRoute: ActivatedRoute,
-    private router: Router)
-  {
+    private router: Router
+  ) {
     this.editArticleForm = formBuilder.group({
       'title' : [null, Validators.required]
     });

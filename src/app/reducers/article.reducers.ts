@@ -1,3 +1,5 @@
+import { createSelector } from 'reselect';
+
 import * as ArticleActions from '../actions/article.actions';
 import { Article } from '../models/article.model';
 
@@ -62,6 +64,13 @@ export function articleReducer(state = initialState, action: ArticleActions.Arti
       };
     }
 
+    case ArticleActions.DELETE_ARTICLE_SUCCESS: {
+      return {
+        ...state,
+        articles: [action.payload],
+      };
+    }
+
     default: {
       return state;
     }
@@ -70,3 +79,9 @@ export function articleReducer(state = initialState, action: ArticleActions.Arti
 
 export const getSelectedId = (state: State) => state.id;
 export const getArticles = (state: State) => state.articles;
+
+export const getSelectedArticle = createSelector(getArticles, getSelectedId, (articles, selectedId) => {
+  return articles.find(function(article: Article) {
+    return article._id === selectedId;
+  });
+});

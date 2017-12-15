@@ -112,7 +112,7 @@ export class DeleteArticle implements Action {
 export class DeleteArticleSuccess implements Action {
   readonly type = DELETE_ARTICLE_SUCCESS;
 
-  constructor(public payload: string) {}
+  constructor(public payload: Article) {}
 }
 
 export class DeleteArticleFail implements Action {

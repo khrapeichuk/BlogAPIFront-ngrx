@@ -14,8 +14,4 @@ export const getArticlesState = (state: AppState) => state.article;
 
 export const getArticles = createSelector(getArticlesState, articleReducer.getArticles);
 export const getSelectedId = createSelector(getArticlesState, articleReducer.getSelectedId);
-// export const getSelectedArticle = createSelector(getArticlesState, articleReducer.getSelectedArticle);
-
-export const getSelectedArticle = createSelector(getArticlesState, getSelectedId, (entities, selectedId) => {
-  return entities[selectedId];
-});
+export const getSelectedArticle = createSelector(getArticlesState, articleReducer.getSelectedArticle);

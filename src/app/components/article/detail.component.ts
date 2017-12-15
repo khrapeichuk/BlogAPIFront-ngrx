@@ -1,8 +1,13 @@
 import { ActivatedRoute, Params } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 
 import { ArticleService } from '../../services/article.service';
 import { UserService } from '../../services/user.service';
+import { Article } from '../../models/article.model';
+
+import * as articleActions from '../../actions/article.actions';
+import * as articleReducer from '../../app.reducers';
 
 @Component({
   selector: 'app-article-detail',
@@ -11,7 +16,8 @@ import { UserService } from '../../services/user.service';
 })
 
 export class ArticleDetailComponent implements OnInit {
-  data: Object;
+  data: Article;
+  article$: Store<Article>;
 
   /**
    * ArticleDetailComponent constructor
@@ -19,8 +25,14 @@ export class ArticleDetailComponent implements OnInit {
    * @param {ArticleService} articleService
    * @param {ActivatedRoute} activatedRoute
    * @param {UserService} userService
+   * @param {Store<Article>} store
    */
-  constructor (private articleService: ArticleService, private activatedRoute: ActivatedRoute, private userService: UserService) {}
+  constructor (
+    private articleService: ArticleService,
+    private activatedRoute: ActivatedRoute,
+    private userService: UserService,
+    private store: Store<any>
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.params
@@ -33,10 +45,8 @@ export class ArticleDetailComponent implements OnInit {
    * @param id
    */
   getArticleDetail(id) {
-    this.articleService.getArticleById(id)
-      .subscribe((responseBody: object) => {
-        this.data = responseBody;
-    });
+    this.store.dispatch(new articleActions.GetArticle(id));
+    this.article$ = this.store.select(articleReducer.getSelectedArticle);
   }
 
   /**
