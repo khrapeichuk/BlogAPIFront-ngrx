@@ -2,8 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
+import { Store } from '@ngrx/store';
+
 import { ArticleService } from '../../services/article.service';
-import { Article } from '../../models/article.model';
+import { CreatedArticle } from '../../models/created-article.model';
+
+import * as articleActions from '../../actions/article.actions';
 
 @Component({
   selector: 'app-edit-article',
@@ -12,7 +16,7 @@ import { Article } from '../../models/article.model';
 })
 
 export class EditArticleComponent implements OnInit {
-  article: Article;
+  createdArticle: CreatedArticle;
   data: Object;
   error: null;
   editArticleForm: FormGroup;
@@ -24,12 +28,14 @@ export class EditArticleComponent implements OnInit {
    * @param {ArticleService} articleService
    * @param {ActivatedRoute} activatedRoute
    * @param {Router} router
+   * @param {Store<any>} store
    */
   constructor(
     formBuilder: FormBuilder,
     private articleService: ArticleService,
-    private  activatedRoute: ActivatedRoute,
-    private router: Router
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private store: Store<any>
   ) {
     this.editArticleForm = formBuilder.group({
       'title' : [null, Validators.required]
@@ -37,6 +43,7 @@ export class EditArticleComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('test');
     this.activatedRoute.params
       .subscribe((params: Params) => {
         this.getArticleData(params['id']);
@@ -50,6 +57,7 @@ export class EditArticleComponent implements OnInit {
     this.articleService.getArticleById(id)
       .subscribe((responseBody: object) => {
         this.data = responseBody;
+        console.log(this.data);
     });
   }
 
@@ -61,19 +69,9 @@ export class EditArticleComponent implements OnInit {
    * @param {HTMLInputElement} image
    */
   editArticle(articleId, title: HTMLInputElement, body: HTMLInputElement, category: HTMLInputElement, image: HTMLInputElement) {
-    this.article._id = articleId;
-    this.article.title = title.value;
-    this.article.image = image.value;
-    this.article.body = body.value;
+    this.createdArticle = new CreatedArticle(articleId, title.value, image.value, body.value);
 
-    this.error = null;
-    this.articleService.editArticle(this.article)
-      .subscribe((responseBody: object) => {
-          this.data = responseBody;
-
-          this.router.navigate(['/articles']);
-        },
-        (error) => this.error = error.json().error
-      );
+    this.store.dispatch(new articleActions.UpdateArticle(this.createdArticle));
+    this.router.navigate(['/articles']);
   }
 }

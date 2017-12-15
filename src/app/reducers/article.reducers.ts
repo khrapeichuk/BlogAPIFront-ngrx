@@ -50,7 +50,21 @@ export function articleReducer(state = initialState, action: ArticleActions.Arti
       };
     }
 
+    case ArticleActions.CREATE_ARTICLE_SUCCESS: {
+      return {
+        ...state,
+        articles: [action.payload],
+      };
+    }
+
     case ArticleActions.UPDATE_ARTICLE: {
+      return {
+        ...state,
+        articles: [action.payload],
+      };
+    }
+
+    case ArticleActions.UPDATE_ARTICLE_SUCCESS: {
       return {
         ...state,
         articles: [action.payload],
