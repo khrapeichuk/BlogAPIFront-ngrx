@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 
 import { ArticleService } from '../../services/article.service';
+import * as articleActions from '../../actions/article.actions';
 
 @Component({
   selector: 'app-create-article',
@@ -13,32 +14,25 @@ import { ArticleService } from '../../services/article.service';
 export class CreateArticleComponent {
   data: Object;
   error: null;
-  createArticleForm: FormGroup;
 
   /**
    * CreateArticleComponent constructor
    *
-   * @param {FormBuilder} formBuilder
    * @param {ArticleService} articleService
    * @param {Router} router
+   * @param {Store<any>} store
    */
-  constructor(formBuilder: FormBuilder, private articleService: ArticleService, private router: Router) {
-    this.createArticleForm = formBuilder.group({
-      'title' : [null, Validators.required]
-    });
-  }
+  constructor(
+    private articleService: ArticleService,
+    private router: Router,
+    private store: Store<any>
+  ) {}
 
   /**
    * @param article
    */
   createArticle(article) {
-    this.articleService.createArticle(article)
-      .subscribe((responseBody: object) => {
-          this.data = responseBody;
-
-          this.router.navigate(['/articles']);
-        },
-        (error) => this.error = error.json().error
-      );
+    this.store.dispatch(new articleActions.CreateArticle(article));
+    this.router.navigate(['/articles']);
   }
 }
