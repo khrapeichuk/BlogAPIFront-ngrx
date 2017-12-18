@@ -2,11 +2,10 @@ import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { User } from '../../models/user.model';
-
 import { LocalStorageService } from '../../services/local-storage.service';
 import { UserService } from '../../services/user.service';
 
+import { User } from '../../models/user.model';
 
 @Component({
   selector: 'app-login',

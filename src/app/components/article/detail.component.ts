@@ -51,6 +51,7 @@ export class ArticleDetailComponent implements OnInit {
 
   /**
    * @param id
+   *
    * @returns {boolean}
    */
   isCommentAuthor(id) {

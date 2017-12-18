@@ -53,6 +53,7 @@ export class ArticlesComponent implements OnInit {
 
   /**
    * @param id
+   *
    * @returns {boolean}
    */
   isArticleAuthor(id) {
