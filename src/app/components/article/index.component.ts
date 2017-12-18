@@ -42,7 +42,7 @@ export class ArticlesComponent implements OnInit {
    * @param id
    */
   deleteArticle(id) {
-    this.articleService.deleteArticle(id);
+    this.store.dispatch(new articleActions.DeleteArticle(id));
 
     location.reload();
   }

@@ -50,4 +50,11 @@ export class ArticleEffects {
       .map(articles => new ArticleActions.UpdateArticleSuccess(articles))
       .catch(error => of(new ArticleActions.UpdateArticleFail(error)))
     );
+
+  @Effect()
+  deleteArticle$: Observable<Action> = this.actions$
+    .ofType(ArticleActions.DELETE_ARTICLE)
+    .map((action: ArticleActions.DeleteArticle) => action.payload)
+    .switchMap(id => this.articleService.deleteArticle(id)
+    );
 }
