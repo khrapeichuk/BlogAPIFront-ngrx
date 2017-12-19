@@ -115,8 +115,6 @@ export class APIService {
    * @returns {ErrorObservable}
    */
   private handleError(error: Response) {
-    console.log(error);
-
     let err = error.json();
 
     if (error.status === 403) {

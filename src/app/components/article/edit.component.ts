@@ -42,7 +42,6 @@ export class EditArticleComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('test');
     this.activatedRoute.params
       .subscribe((params: Params) => {
         this.getArticleData(params['id']);
@@ -56,7 +55,6 @@ export class EditArticleComponent implements OnInit {
     this.articleService.getArticleById(id)
       .subscribe((responseBody: object) => {
         this.data = responseBody;
-        console.log(this.data);
     });
   }
 
