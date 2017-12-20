@@ -26,7 +26,7 @@ export class Login implements Action {
 export class LoginSuccess implements Action {
   readonly type = LOGIN_SUCCESS;
 
-  constructor(public payload: User) {}
+  constructor(public payload: any) {}
 }
 
 export class LoginFail implements Action {
@@ -41,7 +41,7 @@ export class LoginFail implements Action {
 export class Logout implements Action {
   readonly type = LOGOUT;
 
-  constructor(public payload: User) {}
+  constructor(public payload: any) {}
 }
 
 export class LogoutSuccess implements Action {

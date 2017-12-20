@@ -19,7 +19,7 @@ export function authenticationReducer(state = initialState, action: Authenticati
       return {
         ...state,
         isLogged: false,
-        accessToken: null,
+        accessToken: '',
         user: null,
       };
     }
@@ -29,7 +29,7 @@ export function authenticationReducer(state = initialState, action: Authenticati
         ...state,
         isLogged: true,
         accessToken: action.payload.token,
-        user: null,
+        user: action.payload.user,
       };
     }
 

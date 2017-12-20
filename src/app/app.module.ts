@@ -26,6 +26,7 @@ import { UserService } from './services/user.service';
 import { reducers } from './app.reducers';
 
 import { ArticleEffects } from './effects/article.effects';
+import { AuthenticationEffects } from './effects/authentication.effects';
 
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
@@ -50,7 +51,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     HttpModule,
     ReactiveFormsModule,
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([ArticleEffects]),
+    EffectsModule.forRoot([ArticleEffects, AuthenticationEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25
     }),
