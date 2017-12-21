@@ -1,13 +1,19 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/operator/toPromise';
 
 import { APIService } from './api.service';
 import { LocalStorageService } from './local-storage.service';
 
+import { User } from '../models/user.model';
+
 @Injectable()
 export class UserService {
   private userUrl = 'users/';
+  data: Object;
+  currentUser: User;
+  error: null;
 
   /**
    * UserService constructor
@@ -26,13 +32,6 @@ export class UserService {
   }
 
   /**
-   * @returns {Observable<any>}
-   */
-  getAllUsers() {
-    return this.APIService.get(this.userUrl);
-  }
-
-  /**
    * @param user
    *
    * @returns {Observable<any>}
@@ -43,7 +42,7 @@ export class UserService {
         email: user.email,
         password: user.password
       }
-    );
+    ).map((responseBody) => responseBody);
   }
 
   /**
@@ -59,7 +58,7 @@ export class UserService {
         email: user.email,
         password: user.password
       }
-    );
+    ).map((responseBody) => responseBody);
   }
 
   /**

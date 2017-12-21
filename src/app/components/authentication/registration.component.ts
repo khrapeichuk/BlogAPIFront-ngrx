@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 
 import { User } from '../../models/user.model';
 
 import { UserService } from '../../services/user.service';
 import { LocalStorageService } from '../../services/local-storage.service';
+
+import * as authenticationActions from '../../actions/authentication.actions';
 
 @Component({
   selector: 'app-registration',
@@ -14,11 +17,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 })
 
 export class RegistrationComponent {
-  data: Object;
-  currentUser: User;
-  user: User;
   registeredUser: User;
-  error: string;
   registrationForm: FormGroup;
 
   /**
@@ -28,12 +27,14 @@ export class RegistrationComponent {
    * @param {UserService} userService
    * @param {LocalStorageService} localStorageService
    * @param {Router} router
+   * @param {Store<any>} store
    */
   constructor(
     formBuilder: FormBuilder,
     private userService: UserService,
     private localStorageService: LocalStorageService,
-    private router: Router
+    private router: Router,
+    private store: Store<any>
   ) {
     const emailRegex = '^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$';
 
@@ -64,30 +65,8 @@ export class RegistrationComponent {
       ''
     );
 
-    this.error = null;
-    this.userService.registration(this.registeredUser)
-      .subscribe(
-        (responseBody) => {
-          this.data = responseBody;
-          this.currentUser = new User
-          (
-            responseBody.user._id,
-            responseBody.user.firstname,
-            responseBody.user.lastname,
-            responseBody.user.email,
-            responseBody.user.password,
-            responseBody.token,
-            '',
-            '',
-            null,
-            ''
-          );
+    this.store.dispatch(new authenticationActions.Register(this.registeredUser));
 
-          this.localStorageService.setObject('currentUser', this.currentUser);
-
-          this.router.navigate(['profile']);
-        },
-        (error) => this.error = error.json().error
-      );
+    this.router.navigate(['profile']);
   }
 }

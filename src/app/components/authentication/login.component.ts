@@ -1,11 +1,15 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 
 import { LocalStorageService } from '../../services/local-storage.service';
 import { UserService } from '../../services/user.service';
 
 import { User } from '../../models/user.model';
+
+import * as authenticationActions from '../../actions/authentication.actions';
+import { authenticationReducer } from '../../reducers/authentication.reducers';
 
 @Component({
   selector: 'app-login',
@@ -14,12 +18,9 @@ import { User } from '../../models/user.model';
 })
 
 export class LoginComponent {
-  data: Object;
-  currentUser: User;
-  user: User;
   authenticatedUser: User;
-  error: null;
   loginForm: FormGroup;
+  user$: Store<any>;
 
   /**
    * LoginComponent constructor
@@ -28,12 +29,14 @@ export class LoginComponent {
    * @param {UserService} userService
    * @param {LocalStorageService} localStorageService
    * @param {Router} router
+   * @param {Store<any>} store
    */
   constructor(
     formBuilder: FormBuilder,
     private userService: UserService,
     private localStorageService: LocalStorageService,
-    private router: Router
+    private router: Router,
+    private store: Store<any>
   ) {
     const emailRegex = '^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$';
 
@@ -59,28 +62,10 @@ export class LoginComponent {
       null,
       ''
     );
-    this.error = null;
-    this.userService.login(this.authenticatedUser)
-      .subscribe(
-        (responseBody) => {
-          this.data = responseBody;
-          this.currentUser = new User(responseBody.user._id,
-                                      responseBody.user.firstname,
-                                      responseBody.user.lastname,
-                                      responseBody.user.email,
-                                      '',
-                                      responseBody.token,
-                                      responseBody.user.created_at,
-                                      responseBody.user.updated_at,
-                                      responseBody.user.is_subscribed,
-                                      responseBody.user.rights
-          );
 
-          this.localStorageService.setObject('currentUser', this.currentUser);
+    this.store.dispatch(new authenticationActions.Login(this.authenticatedUser));
+    // this.user$ = this.store.select(authenticationReducer.getUser);
 
-          this.router.navigate(['profile']);
-        },
-        (error) => this.error = error.json().error
-      );
+    this.router.navigate(['profile']);
   }
 }

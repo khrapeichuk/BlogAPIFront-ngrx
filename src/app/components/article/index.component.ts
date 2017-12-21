@@ -30,8 +30,7 @@ export class ArticlesComponent implements OnInit {
     private articleService: ArticleService,
     private userService: UserService,
     private store: Store<any>
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.store.dispatch(new articleActions.GetArticles());
